@@ -2,18 +2,17 @@ package com.devindi.gradle.helper.task
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
-import com.devindi.gradle.helper.tools.HookFactory
-import com.devindi.gradle.helper.tools.FileUtils
+import com.devindi.gradle.helper.tools.*
 
 class InitProjectTask extends DefaultTask {
 
 	@TaskAction
 	def init() {
-		println 'Initing project'
-		def versionPropFile = project.file(project.git.versionFile)
-		if (! (versionPropFile.canRead() && versionPropFile.canWrite())) {
-        	throw new FileNotFoundException("Version file not found by path: ${versionPropFile.getAbsolutePath()}")
-    	}
+		
+		File versionPropFile = project.file(project.git.versionFile)
+		println 'Creating ${project.git.versionFile}'
+		FileUtils.writeToFile(versionPropFile, PropertyFactory.createVersionProperties())
+		println 'Created ${project.git.versionFile}'
 	}
 
 	static class InsertGitHooksTask extends DefaultTask {
