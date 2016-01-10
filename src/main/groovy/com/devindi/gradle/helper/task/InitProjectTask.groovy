@@ -2,6 +2,7 @@ package com.devindi.gradle.helper.task
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import com.devindi.gradle.helper.tools.HookFactory
 
 class InitProjectTask extends DefaultTask {
 
@@ -24,8 +25,10 @@ class InitProjectTask extends DefaultTask {
 				throw new IllegalStateException("Repository root $repositoryRootFolder is incorrect. .git folder not found")
 			}
 			File hooksFolder = new File (gitFolder, 'hooks')
-			writeToFile(hooksFolder, 'prepare-commit-msg', prepareHook)
+			writeToFile(hooksFolder, 'prepare-commit-msg', HookFactory.createHook('prepare-commit-msg'))
 			println 'prepare-commit-msg inserted'
+			writeToFile(hooksFolder, 'commit-msg', HookFactory.createHook('commit-msg'))
+			println 'commit-msg inserted'
 		}
 
 		public void writeToFile(File directory, String fileName, def infoList) {
@@ -37,19 +40,5 @@ class InitProjectTask extends DefaultTask {
   			}
   			hookFile.setExecutable(true)
 		}
-
-		List<String> prepareHook = [
-		'#!/bin/bash',
-		'echo "prepare-commit-msg hook"',
-		'COMMENT=`cat "$1"`',
-		'BRANCH=`git rev-parse --abbrev-ref HEAD`',
-		'FIRST_COMMENT_CHAR=${COMMENT:0:1}',
-		'if [ "$FIRST_COMMENT_CHAR" = "<" ]; then',
-		'exit',
-		'fi',
-		'COMMENT="<$BRANCH> $COMMENT"',
-		'echo "$COMMENT" > "$1"',
-		'echo "prepare-commit-msg hook completed"'
-		]
 	}
 }
