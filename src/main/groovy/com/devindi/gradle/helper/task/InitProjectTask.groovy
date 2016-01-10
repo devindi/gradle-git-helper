@@ -3,6 +3,7 @@ package com.devindi.gradle.helper.task
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import com.devindi.gradle.helper.tools.HookFactory
+import com.devindi.gradle.helper.tools.FileUtils
 
 class InitProjectTask extends DefaultTask {
 
@@ -25,20 +26,10 @@ class InitProjectTask extends DefaultTask {
 				throw new IllegalStateException("Repository root $repositoryRootFolder is incorrect. .git folder not found")
 			}
 			File hooksFolder = new File (gitFolder, 'hooks')
-			writeToFile(hooksFolder, 'prepare-commit-msg', HookFactory.createHook('prepare-commit-msg'))
+			FileUtils.writeToFile(hooksFolder, 'prepare-commit-msg', HookFactory.createHook('prepare-commit-msg'))
 			println 'prepare-commit-msg inserted'
-			writeToFile(hooksFolder, 'commit-msg', HookFactory.createHook('commit-msg'))
+			FileUtils.writeToFile(hooksFolder, 'commit-msg', HookFactory.createHook('commit-msg'))
 			println 'commit-msg inserted'
-		}
-
-		public void writeToFile(File directory, String fileName, def infoList) {
-  			File hookFile = new File(directory, fileName)
-  			hookFile.withWriter { out ->
-    			infoList.each {
-      				out.println it
-    			}
-  			}
-  			hookFile.setExecutable(true)
 		}
 	}
 }
