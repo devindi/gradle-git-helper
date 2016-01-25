@@ -20,9 +20,5 @@ class TagBuildTask extends DefaultTask {
 		def tag = repo.tag
 		println tag
 		repo.tag.add(name: version, annotate: true)
-    	//repo.tag.add {
-        //	name = version
-        //	force = true
-    	//}
 	}
 }

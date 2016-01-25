@@ -13,6 +13,7 @@ class GitHelperPlugin implements Plugin<Project> {
 		project.task("setupGit", type: InitProjectTask)
 		project.task('insertHooks', type: InitProjectTask.InsertGitHooksTask)
 		project.task('tagBuild', type: TagBuildTask)
+		project.task('bumpVersionName', type: BumpVersionNameTask)
 		println "Task added"
 
 		project.tasks.setupGit.dependsOn project.tasks.insertHooks
