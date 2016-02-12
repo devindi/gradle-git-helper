@@ -8,6 +8,7 @@ import com.devindi.gradle.helper.tools.*
 class GitHelperPlugin implements Plugin<Project> {
 	void apply(Project project) {
 		project.extensions.create("git", GitHelperPluginExtension)
+		project.git.extensions.create("hooks", HooksExtension)
 		project.task("bumpVersionCode", type: BumpVersionTask)
 		project.task("setupGit", type: InitProjectTask)
 		project.task('insertHooks', type: InitProjectTask.InsertGitHooksTask)

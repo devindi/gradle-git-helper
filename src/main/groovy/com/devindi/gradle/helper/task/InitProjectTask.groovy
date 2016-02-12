@@ -25,10 +25,28 @@ class InitProjectTask extends DefaultTask {
 				throw new IllegalStateException("Repository root $repositoryRootFolder is incorrect. .git folder not found")
 			}
 			File hooksFolder = new File (gitFolder, 'hooks')
-			FileUtils.writeToFile(hooksFolder, 'prepare-commit-msg', HookFactory.createHook('prepare-commit-msg'))
-			println 'prepare-commit-msg inserted'
-			FileUtils.writeToFile(hooksFolder, 'commit-msg', HookFactory.createHook('commit-msg'))
-			println 'commit-msg inserted'
+			if (project.git.hooks.useBuiltInHooks) {
+				FileUtils.writeToFile(hooksFolder, 'prepare-commit-msg', HookFactory.createHook('prepare-commit-msg'))
+				println 'prepare-commit-msg inserted'
+				FileUtils.writeToFile(hooksFolder, 'commit-msg', HookFactory.createHook('commit-msg'))
+				println 'commit-msg inserted'
+			}
+			project.git.hooks.hooks?.each {
+				File src = project.file(it)
+				checkOverwrite(src.name)
+      			File dst = new File(hooksFolder, src.name)
+      			dst.delete()
+      			dst << src.text
+			}
+		}
+
+		void checkOverwrite(String s) {
+			if (!project.git.hooks.useBuiltInHooks)
+				return
+			if (s.equals('prepare-commit-msg'))
+				println 'prepare-commit-msg hook will be overwrite'
+			if (s.equals('commit-msg'))
+				println 'commit-msg hook will be overwrite'	
 		}
 	}
 }

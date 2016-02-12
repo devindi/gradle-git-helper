@@ -4,6 +4,5 @@ class GitHelperPluginExtension {
 
 	String versionFile = './version.properties'
 	String repositoryRoot = './..'
-	
-	
+	HooksExtension hooksExtension = new HooksExtension()
 }
