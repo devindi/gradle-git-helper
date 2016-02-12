@@ -1,5 +1,16 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
+
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
+
 repositories {
     mavenCentral()
     jcenter()
@@ -19,4 +30,13 @@ uploadArchives {
             repository(url: uri('../repo'))
         }
     }
+}
+
+publish {
+    groupId = 'com.devindi'
+    artifactId = 'git-helper'
+    publishVersion = '1.0'
+    desc = 'Gradle plugin for managing git hooks and versioning your project.'
+    licences = ['GPL-3.0']
+    website = 'https://github.com/devindi/gradle-git-helper'
 }
