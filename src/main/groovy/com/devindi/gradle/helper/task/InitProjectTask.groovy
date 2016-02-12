@@ -10,7 +10,6 @@ class InitProjectTask extends DefaultTask {
 	def init() {
 		
 		File versionPropFile = project.file(project.git.versionFile)
-		println 'Creating ${project.git.versionFile}'
 		FileUtils.writeToFile(versionPropFile, PropertyFactory.createVersionProperties())
 		println 'Created ${project.git.versionFile}'
 	}
@@ -44,9 +43,9 @@ class InitProjectTask extends DefaultTask {
 			if (!project.git.hooks.useBuiltInHooks)
 				return
 			if (s.equals('prepare-commit-msg'))
-				println 'prepare-commit-msg hook will be overwrite'
+				println 'prepare-commit-msg hook will be overwritten'
 			if (s.equals('commit-msg'))
-				println 'commit-msg hook will be overwrite'	
+				println 'commit-msg hook will be overwritten'	
 		}
 	}
 }
