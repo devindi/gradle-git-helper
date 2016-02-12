@@ -1,4 +1,5 @@
 # gradle-git-helper
+[ ![Download](https://api.bintray.com/packages/devindi/maven/git-helper/images/download.svg) ](https://bintray.com/devindi/maven/git-helper/_latestVersion)
 
 Gradle plugin for managing git hooks and versioning your project.
 
