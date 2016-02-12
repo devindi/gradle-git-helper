@@ -1,4 +1,4 @@
-* package com.devindi.gradle.helper
+package com.devindi.gradle.helper
 
 import org.gradle.api.*
 import com.devindi.gradle.helper.task.*
