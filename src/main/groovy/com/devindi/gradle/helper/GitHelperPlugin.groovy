@@ -1,4 +1,4 @@
-package com.devindi.gradle.helper
+* package com.devindi.gradle.helper
 
 import org.gradle.api.*
 import com.devindi.gradle.helper.task.*
@@ -10,11 +10,11 @@ class GitHelperPlugin implements Plugin<Project> {
 		project.extensions.create("git", GitHelperPluginExtension)
 		project.git.extensions.create("hooks", HooksExtension)
 		project.task("bumpVersionCode", type: BumpVersionTask)
-		project.task("setupGit", type: InitProjectTask)
+		project.task("setup", type: InitProjectTask)
 		project.task('insertHooks', type: InitProjectTask.InsertGitHooksTask)
 		project.task('tagBuild', type: TagBuildTask)
 		project.task('bumpVersionName', type: BumpVersionNameTask)
-		project.tasks.setupGit.dependsOn project.tasks.insertHooks
+		project.tasks.setup.dependsOn project.tasks.insertHooks
 	}
 
 	static String getVersionName(Project project) {
